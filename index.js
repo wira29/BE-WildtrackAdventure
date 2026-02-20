@@ -24,7 +24,7 @@ app.use(cors({
   credentials: true
 }));
 
-const authRoutes = require("./routes/AUTHrOUTES.JS");
+const authRoutes = require("./routes/authRoutes");
 const transactionRoutes = require("./routes/transactionRoutes");
 const verifyToken = require("./middleware/authMiddleware");
 
