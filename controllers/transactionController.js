@@ -81,8 +81,8 @@ const createTransaction = async (req, res) => {
             transactionDetails: parameter.item_details
         });
     } catch (error) {
-        console.log('MIDTRANS_SERVER_KEY exists:', !!process.env.MIDTRANS_SERVER_KEY);
-        console.log('MIDTRANS_SERVER_KEY length:', (process.env.MIDTRANS_SERVER_KEY || '').length);
+        console.error('MIDTRANS_SERVER_KEY exists:', !!process.env.MIDTRANS_SERVER_KEY);
+        console.error('MIDTRANS_SERVER_KEY length:', (process.env.MIDTRANS_SERVER_KEY || '').length);
         console.error('Midtrans Error:', error);
         res.status(500).json({
             success: false,
