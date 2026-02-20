@@ -23,7 +23,6 @@ app.use(cors({
   },
   credentials: true
 }));
-app.options("*", cors());
 
 const authRoutes = require("./routes/AUTHrOUTES.JS");
 const transactionRoutes = require("./routes/transactionRoutes");
