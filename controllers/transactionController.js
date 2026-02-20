@@ -12,8 +12,6 @@ const snap = new midtransClient.Snap({
 
 const createTransaction = async (req, res) => {
     try {
-        console.log("MIDTRANS KEY:", process.env.MIDTRANS_SERVER_KEY);
-        console.log("MIDTRANS KEY:", process.env.CLIENT_SERVER_KEY);
         const { customerDetails, tripDetails } = req.body;
 
         const parameter = {
@@ -83,6 +81,8 @@ const createTransaction = async (req, res) => {
             transactionDetails: parameter.item_details
         });
     } catch (error) {
+        console.log('MIDTRANS_SERVER_KEY exists:', !!process.env.MIDTRANS_SERVER_KEY);
+        console.log('MIDTRANS_SERVER_KEY length:', (process.env.MIDTRANS_SERVER_KEY || '').length);
         console.error('Midtrans Error:', error);
         res.status(500).json({
             success: false,
