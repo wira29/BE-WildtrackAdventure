@@ -6,9 +6,22 @@ const cors = require('cors');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+const whitelist = [
+  "https://www.wildtrack-adventure.com",
+  "https://wildtrack-adventure.com",
+  "http://localhost:5173",
+  "http://localhost:3000"
+];
+
 app.use(cors({
-    origin: 'https://www.wildtrack-adventure.com', // Your React app URL
-    credentials: true
+  origin: function (origin, callback) {
+    if (!origin || whitelist.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
 }));
 
 
