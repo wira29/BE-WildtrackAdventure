@@ -1,3 +1,6 @@
+process.on('uncaughtException', err => { console.error('Uncaught:', err); });
+console.log('App started');
+
 if (process.env.NODE_ENV !== 'production') {
  require('dotenv').config();
 }
