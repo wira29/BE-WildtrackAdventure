@@ -12,6 +12,8 @@ const snap = new midtransClient.Snap({
 
 const createTransaction = async (req, res) => {
     try {
+        console.log("MIDTRANS KEY:", process.env.MIDTRANS_SERVER_KEY);
+        console.log("MIDTRANS KEY:", process.env.CLIENT_SERVER_KEY);
         const { customerDetails, tripDetails } = req.body;
 
         const parameter = {
