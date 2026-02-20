@@ -23,7 +23,7 @@ app.use(cors({
   },
   credentials: true
 }));
-
+app.options("*", cors());
 
 const authRoutes = require("./routes/AUTHrOUTES.JS");
 const transactionRoutes = require("./routes/transactionRoutes");
@@ -45,6 +45,8 @@ app.get('/', (req, res) => {
     });
 })
 
-app.listen(3000, () => {
-    console.log("Server is running on port 3000");
-})
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log("Server running on", PORT);
+});
