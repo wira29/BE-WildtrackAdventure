@@ -32,8 +32,7 @@ class TransactionController extends Controller
         DB::beginTransaction();
 
         try {
-            $customerDetails = $request->input('customerDetails');
-            $tripDetails = $request->input('tripDetails');
+            $type = $request->input('type') ?? 'atr';
 
             // Generate unique order ID
             $orderId = 'ORDER-' . time();
@@ -86,15 +85,15 @@ class TransactionController extends Controller
                 'name' => $request->firstName . ' ' . $request->lastName,
                 'email' => $request->email,
                 'status' => 'pending',
-                'redirect_url' => config('midtrans.is_production')
+                'redirect_url' => config('app.midtrans.is_production')
             ? "https://app.midtrans.com/snap/v2/vtweb/{$snapToken}"
             : "https://app.sandbox.midtrans.com/snap/v2/vtweb/{$snapToken}",
                 'package_name' => $request->trip_name,
                 'packgae_qty' => 1,
                 'participants' => $request->camp_members,
                 'payment_method' => '',
-                'checkin' => Carbon::parse("2026-05-30 15:00:00"),
-                'checkout' => Carbon::parse("2026-05-31 16:00:00"),
+                'checkin' => $type == "atr" ? Carbon::parse("2026-05-30 15:00:00") : $request->checkin,
+                'checkout' => $type == "atr" ? Carbon::parse("2026-05-31 16:00:00") : $request->checkout,
                 'phone' => $request->phone,
                 'image' => $imageUrl,
             ]);
@@ -205,6 +204,7 @@ class TransactionController extends Controller
     public function exportExcel(Request $request)
     {
         $validated = $request->validate([
+            'type' => 'nullable|string',
             'status' => 'nullable|string',
             'search' => 'nullable|string',
         ]);

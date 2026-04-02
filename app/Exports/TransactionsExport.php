@@ -26,6 +26,10 @@ protected $filters;
             $query->where('status', $this->filters['status']);
         }
 
+        if (!empty($this->filters['type'])) {
+            $query->where('type', $this->filters['type']);
+        }
+
         if (!empty($this->filters['search'])) {
             $search = $this->filters['search'];
             $query->where(function($q) use ($search) {
