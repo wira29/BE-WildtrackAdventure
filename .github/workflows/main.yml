@@ -1,0 +1,31 @@
+name: Build and Push Laravel Image
+
+on:
+  push:
+    branches: [ "main" ] # Trigger jalan setiap push ke main
+
+jobs:
+  build-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and Push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          # Ganti 'wildtrack-be' sesuai nama repo Docker Hub kamu
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/wildtrack-be:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
